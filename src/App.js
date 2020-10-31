@@ -14,23 +14,37 @@ function App() {
   }, []);
 
   async function handleAddRepository() {
-    
+    const response = await api.post('repositories', {
+      title: `Novo repositório ${Date.now()}`,
+      url: 'https://github/novo-repositorio',
+      techs: ['NodeJS', 'ReactJS', 'React Native']
+    });
+
+    const repository = response.data;
+
+    setRepositories([...repositories, repository]);
   }
 
   async function handleRemoveRepository(id) {
-    // TODO
+    const response = await api.delete(`repositories/${id}`);
+
+    if (response.status === 204) {
+      const newRepositoriesState = repositories.filter(repository => repository.id !== id);
+
+      setRepositories(newRepositoriesState);
+    }
   }
 
   return (
     <div>
       <ul data-testid="repository-list">
         {repositories.map(repository => <li key={repository.id}>{repository.title}
-          <button onClick={id => handleRemoveRepository(id)}>Remover</button>
+          <button onClick={() => handleRemoveRepository(repository.id)}>Remover</button>
         </li>)}
       </ul>
 
 
-      <button onClick={handleAddRepository}>Adicionar</button>
+      <button type="button" onClick={handleAddRepository}>Adicionar</button>
     </div>
   );
 }
