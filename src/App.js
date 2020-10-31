@@ -1,6 +1,4 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useState, useEffect  } from "react";
 
 import api from './services/api';
 
@@ -42,8 +40,6 @@ function App() {
           <button onClick={() => handleRemoveRepository(repository.id)}>Remover</button>
         </li>)}
       </ul>
-
-
       <button type="button" onClick={handleAddRepository}>Adicionar</button>
     </div>
   );
